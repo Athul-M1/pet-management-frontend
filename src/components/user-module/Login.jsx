@@ -1,7 +1,13 @@
 // import React from 'react';
 import { Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
+
+  const handleLogin = (e)=>{
+    e.preventDefault()
+    toast.success("sucessfully logged in ")
+  }
   return (
     <div className="w-full flex justify-center items-center h-screen">
     <div className='w-[400px] border-2 border-gray-300 rounded-2xl'>
@@ -41,16 +47,17 @@ const Login = () => {
                   required
                 />
               </div>
-    
+             <ToastContainer/>
               <button
                 type="submit"
-                className="bg-black text-white rounded-md py-2 hover:bg-primary-200 transition duration-200"
+                className="bg-black text-white py-2 hover:bg-primary-200 transition duration-200 rounded-4xl"
+                onClick={(e)=>handleLogin(e)}
               >
                 Login
               </button>
             </form>
           </div>
-          <p className='text-center py-3 font-medium'>No account yet? <Link >Sign in</Link> </p>
+          <p className='text-center py-3 font-medium'>No account yet? <Link to={'/sign-up'} >Sign up</Link> </p>
     </div>
     </div>
   );

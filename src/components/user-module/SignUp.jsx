@@ -1,7 +1,12 @@
-import React from 'react'
+// import React from 'react'
 import { Link } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify'
 
 const SignUp = () => {
+  const handlesignup = (e) =>{
+    e.preventDefault()
+    toast.success("naruto uzumaki ")
+  }
   return (
       <div className="w-full flex justify-center items-center h-screen">
     <div className='w-[400px] border-2 border-gray-300 rounded-2xl'>
@@ -58,12 +63,14 @@ const SignUp = () => {
               <button
                 type="submit"
                 className="bg-black text-white rounded-md py-2 hover:bg-primary-200 transition duration-200"
+                onClick={(e)=>handlesignup(e)}
               >
                 Login
               </button>
-            </form>
+            </form> 
           </div>
-          <p className='text-center py-3 font-medium'>No account yet? <Link >Sign in</Link> </p>
+          <p className='text-center py-3 font-medium'>Have an account? <Link to="/login" >Log in</Link> </p>
+          <ToastContainer/>
     </div>
     </div>
   )

@@ -1,9 +1,122 @@
-import React from 'react'
+import { useState } from "react";
+import { Sidebar, SidebarBody, SidebarLink } from "../ui/Sidebar";
+import {
+  
+  IconCalendarCheck,
+  IconExclamationCircle,
+  IconHome,
+  IconLogout2,
+  IconMessage
+} from "@tabler/icons-react";
+import { motion } from "framer-motion";
+import { cn } from "../../lib/utils"
+import { Link, Outlet, Route, Router } from "react-router-dom";
+import About from "./About";
+import Feedback from "./Feedback";
 
-const Home = () => {
+export function SidebarDemo() {
+  const links = [
+    {
+      label: "Home",
+      href: "/",
+      icon: (
+        <IconHome className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+      ),
+    },
+    {
+      label: "Book appointment",
+      href: "/booking",
+      icon: (
+        <IconCalendarCheck className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+      ),
+    },
+    {
+      label: "About",
+      href: "/about",
+      icon: (
+        <IconExclamationCircle className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+      ),
+    },
+     {
+      label: "Feedback",
+      href: "/feedback",
+      icon: (
+        <IconMessage className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+      ),
+    },
+    {
+      label: "Logout",
+      href: "#",
+      icon: (
+        <IconLogout2 className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+      ),
+    },
+  ];
+  const [open, setOpen] = useState(false);
   return (
-    <div>Home</div>
-  )
+    <div
+      className={cn(
+        "mx-auto flex w-full max-w-7xl flex-1 flex-col overflow-hidden  border border-neutral-200 bg-gray-100 md:flex-row dark:border-neutral-700 dark:bg-primary",
+        "h-[90vh]"
+      )}>
+      <Sidebar open={open} setOpen={setOpen}>
+        <SidebarBody className="justify-between gap-10">
+          <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
+            {open ? <Logo /> : <LogoIcon />}
+            <div className="mt-8 flex flex-col gap-2">
+              {links.map((link, idx) => (
+                <SidebarLink key={idx} link={link} />
+              ))}
+            </div>
+          </div>
+          
+        </SidebarBody>
+      </Sidebar>
+      <Dashboard />
+    </div>
+  );
 }
+export const Logo = () => {
+  return (
+    <Link
+      to={"/"}
+      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black">
+      <div
+        className="h-5 w-6 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-black dark:bg-white" />
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="font-medium whitespace-pre text-black dark:text-white">
+        Pet care
+      </motion.span>
+    </Link>
+  );
+};
+export const LogoIcon = () => {
+  return (
+    <Link
+      to={"/"}
+      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black">
+      <div
+        className="h-5 w-6 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-black dark:bg-white" />
+    </Link>
+  );
+};
 
-export default Home
+// Dummy dashboard component with content
+const Dashboard = () => {
+  return (
+    <div className="flex flex-1">
+      <div
+        className="block h-full w-full  rounded-tl-2xl border border-neutral-200  p-2 md:p-10 dark:border-neutral-700">
+        <div className="w-full h-full gap-2">
+            <Outlet /> 
+        </div>
+        
+         <footer className="flex justify-center text-white h-14 items-center">
+            <p>&copy; All rights reserved </p>
+   </footer>
+      </div>
+    </div>
+  );
+};
